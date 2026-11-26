@@ -1,0 +1,111 @@
+{
+  "entities": {
+    "UserSave": {
+      "title": "UserSave",
+      "description": "Private player progression, currency balances, and inventory unlocked items.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "coins": { "type": "integer" },
+        "diamonds": { "type": "integer" },
+        "level": { "type": "integer" },
+        "xp": { "type": "integer" },
+        "wins": { "type": "integer" },
+        "gamesPlayed": { "type": "integer" },
+        "selectedTheme": { "type": "string", "maxLength": 32 },
+        "selectedToken": { "type": "string", "maxLength": 32 },
+        "selectedDice": { "type": "string", "maxLength": 32 },
+        "selectedAvatar": { "type": "string", "maxLength": 64 },
+        "unlockedThemes": { "type": "array" },
+        "unlockedTokens": { "type": "array" },
+        "unlockedDice": { "type": "array" },
+        "unlockedAvatars": { "type": "array" },
+        "dailyClaimedAt": { "type": "string", "maxLength": 40 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "coins",
+        "diamonds",
+        "level",
+        "xp",
+        "wins",
+        "gamesPlayed",
+        "selectedTheme",
+        "selectedToken",
+        "selectedDice",
+        "selectedAvatar",
+        "unlockedThemes",
+        "unlockedTokens",
+        "unlockedDice",
+        "unlockedAvatars",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "FriendProfile": {
+      "title": "FriendProfile",
+      "description": "Public non-PII player profile for social search and leaderboards.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "avatarId": { "type": "string", "maxLength": 64 },
+        "level": { "type": "integer" },
+        "wins": { "type": "integer" },
+        "isPublic": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "avatarId", "level", "wins", "isPublic", "createdAt", "updatedAt"]
+    },
+    "TransferCode": {
+      "title": "TransferCode",
+      "description": "Device transfer snapshot linked to an authenticated user.",
+      "type": "object",
+      "properties": {
+        "ownerUid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "coins": { "type": "integer" },
+        "diamonds": { "type": "integer" },
+        "level": { "type": "integer" },
+        "wins": { "type": "integer" },
+        "selectedTheme": { "type": "string", "maxLength": 32 },
+        "selectedToken": { "type": "string", "maxLength": 32 },
+        "selectedDice": { "type": "string", "maxLength": 32 },
+        "selectedAvatar": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "ownerUid",
+        "displayName",
+        "coins",
+        "diamonds",
+        "level",
+        "wins",
+        "selectedTheme",
+        "selectedToken",
+        "selectedDice",
+        "selectedAvatar",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserSave" },
+      "description": "Owner-only cloud save data for coins, diamonds, themes, tokens, dice, and stats."
+    },
+    "/friendProfiles/{userId}": {
+      "schema": { "$ref": "#/entities/FriendProfile" },
+      "description": "Public non-PII player directory searchable by signed-in users."
+    },
+    "/transferCodes/{code}": {
+      "schema": { "$ref": "#/entities/TransferCode" },
+      "description": "Single-lookup Change Device transfer code snapshots."
+    }
+  }
+}

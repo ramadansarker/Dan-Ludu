@@ -1,0 +1,6 @@
+{
+  "name": "RAMADAN DEV",
+  "description": "RAMADAN DEV — Classic Ludo board game with online multiplayer, team up, smart AI, pass and play, and customizable board themes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
